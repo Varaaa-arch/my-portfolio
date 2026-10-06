@@ -1,22 +1,33 @@
 ---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/jetbrains-mono';
 import '../styles/globals.css';
-interface Props { title: string }
+import Container from '../components/ui/Container.astro';
+
+interface Props {
+  title: string;
+}
 const { title } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
   </head>
-  <body>
-    <nav class="flex gap-4 p-4">
-      <a href="/">Home</a>
-      <a href="/projects">Projects</a>
-      <a href="/lab">Lab</a>
-      <a href="/research">Research</a>
-    </nav>
+  <body class="min-h-screen bg-background text-text">
+    <header class="border-b border-border">
+      <Container class="flex h-16 items-center justify-between">
+        <a href="/" class="font-display text-body font-semibold">Portfolio</a>
+        <nav class="flex gap-md text-small text-muted">
+          <a href="/projects" class="link hover:text-text">Projects</a>
+          <a href="/lab" class="link hover:text-text">Lab</a>
+          <a href="/research" class="link hover:text-text">Research</a>
+        </nav>
+      </Container>
+    </header>
     <slot />
   </body>
 </html>
