@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Button from '../components/ui/Button.astro';
+---
+<BaseLayout title="Styleguide">
+  <Section eyebrow="Typography" title="Design system">
+    <h1 class="font-display text-display">Display</h1>
+    <p class="mt-sm max-w-xl text-muted">Body text pakai Inter, muted buat teks sekunder.</p>
+    <code class="mt-sm block font-mono text-small">font-mono text-small</code>
+  </Section>
+
+  <Section eyebrow="Buttons" title="Variants">
+    <div class="flex flex-wrap gap-sm">
+      <Button>Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button size="sm">Small</Button>
+      <Button size="lg" href="/projects">Large link</Button>
+    </div>
+  </Section>
+
+  <Section eyebrow="Grid" title="Cards">
+    <div class="grid grid-cols-1 gap-md md:grid-cols-3">
+      {[1, 2, 3].map(() => (
+        <div class="rounded-lg border border-border bg-surface p-md">
+          <div class="aspect-card rounded-md bg-border"></div>
+          <p class="mt-sm">Card <a href="#" class="link text-accent">link</a></p>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
