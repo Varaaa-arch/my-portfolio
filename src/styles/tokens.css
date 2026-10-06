@@ -1,1 +1,73 @@
-:root {}
+/* ============ RAW TOKENS (nilai asli, bisa di-override per theme) ============ */
+:root {
+  --c-background: #0a0a0b;
+  --c-surface: #141417;
+  --c-border: #26262c;
+  --c-text: #f4f4f5;
+  --c-muted: #8b8b95;
+  --c-accent: #7c5cff;
+
+  --container-max: 1200px;
+  --container-pad: clamp(1rem, 4vw, 2.5rem);
+  --section-y: clamp(4rem, 10vw, 8rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+}
+
+/* Contoh theme light (opsional, aktifkan nanti kalau mau) */
+:root[data-theme='light'] {
+  --c-background: #fafafa;
+  --c-surface: #ffffff;
+  --c-border: #e4e4e7;
+  --c-text: #0a0a0b;
+  --c-muted: #6b6b75;
+}
+
+/* ============ TAILWIND THEME (jadi utility class) ============ */
+@theme inline {
+  /* COLOR */
+  --color-background: var(--c-background);
+  --color-surface: var(--c-surface);
+  --color-border: var(--c-border);
+  --color-text: var(--c-text);
+  --color-muted: var(--c-muted);
+  --color-accent: var(--c-accent);
+
+  /* SPACING -> p-md, gap-lg, mt-xl, dst */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 3rem;
+  --spacing-xl: 6rem;
+
+  /* RADIUS */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* TYPOGRAPHY: family */
+  --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  /* TYPOGRAPHY: size -> text-display, text-heading, text-body, text-small */
+  --text-display: clamp(2.75rem, 8vw, 6.5rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.04em;
+  --text-heading: clamp(1.75rem, 4vw, 3rem);
+  --text-heading--line-height: 1.1;
+  --text-heading--letter-spacing: -0.02em;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+
+  /* IMAGE RATIO -> aspect-card, aspect-hero */
+  --aspect-card: 4 / 3;
+  --aspect-hero: 21 / 9;
+
+  /* EASING -> ease-out-expo */
+  --ease-out-expo: var(--ease-out);
+}
