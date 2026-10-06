@@ -1,0 +1,22 @@
+---
+import Container from './Container.astro';
+
+interface SectionProps {
+    id?: string;
+    eyebrow?: string;
+    title?: string;
+    class?: string;
+}
+const { id, eyebrow, title, class: className = '' } = Astro.props as SectionProps;
+---
+<section id={id} class:list={['py-(--section-y)', className]}>
+  <Container>
+    {(eyebrow || title) && (
+      <header class="mb-lg">
+        {eyebrow && <p class="mb-xs font-mono text-small text-accent uppercase tracking-widest">{eyebrow}</p>}
+        {title && <h2 class="font-display text-heading">{title}</h2>}
+      </header>
+    )}
+    <slot />
+  </Container>
+</section>
