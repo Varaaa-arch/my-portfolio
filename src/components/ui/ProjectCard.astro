@@ -1,0 +1,17 @@
+---
+import type { Project } from '../../data/projects';
+interface Props { project: Project }
+const { project } = Astro.props;
+---
+<article class="flex h-full flex-col rounded-lg border border-border bg-surface p-md">
+  <p class="font-mono text-small text-muted">{project.year}</p>
+  <h3 class="mt-xs font-display text-body font-semibold">
+    {project.href ? <a href={project.href} class="link">{project.title}</a> : project.title}
+  </h3>
+  <p class="mt-xs flex-1 text-small text-muted">{project.summary}</p>
+  <ul class="mt-sm flex flex-wrap gap-xs" aria-label="Tech stack">
+    {project.tags.map((tag) => (
+      <li class="rounded-sm border border-border px-xs py-0.5 font-mono text-small">{tag}</li>
+    ))}
+  </ul>
+</article>

@@ -1,0 +1,18 @@
+---
+import Section from '../ui/Section.astro';
+import Button from '../ui/Button.astro';
+import ProjectCard from '../ui/ProjectCard.astro';
+import { projects } from '../../data/projects';
+
+const featured = projects.filter((p) => p.featured);
+---
+<Section id="projects" eyebrow="Projects" title="Selected work">
+  <ul class="grid grid-cols-1 gap-md md:grid-cols-2 lg:grid-cols-3">
+    {featured.map((project) => (
+      <li><ProjectCard project={project} /></li>
+    ))}
+  </ul>
+  <div class="mt-lg">
+    <Button href="/projects" variant="secondary">All projects</Button>
+  </div>
+</Section>

@@ -1,6 +1,13 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import ProjectCard from '../../components/ui/ProjectCard.astro';
+import { projects } from '../../data/projects';
 ---
-<BaseLayout title="Projects">
-  <main class="p-4"><h1>Projects</h1></main>
+<BaseLayout title="Projects" description="Selected projects and case studies.">
+  <Section eyebrow="Projects" title="All projects">
+    <ul class="grid grid-cols-1 gap-md md:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project) => <li><ProjectCard project={project} /></li>)}
+    </ul>
+  </Section>
 </BaseLayout>

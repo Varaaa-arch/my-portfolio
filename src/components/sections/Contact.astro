@@ -1,0 +1,18 @@
+---
+import Section from '../ui/Section.astro';
+import Button from '../ui/Button.astro';
+import { profile } from '../../data/profile';
+---
+<Section id="contact" eyebrow="Contact" title="Let's talk">
+  <p class="max-w-xl text-muted">
+    Lagi open buat kolaborasi atau sekadar ngobrol soal engineering. Email aja langsung.
+  </p>
+  <div class="mt-md">
+    <Button href={`mailto:${profile.email}`} size="lg">{profile.email}</Button>
+  </div>
+  <ul class="mt-lg flex flex-wrap gap-md text-small" aria-label="Social links">
+    {profile.socials.map((social) => (
+      <li><a href={social.href} rel="me" class="link text-muted hover:text-text">{social.label}</a></li>
+    ))}
+  </ul>
+</Section>

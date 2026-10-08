@@ -1,0 +1,22 @@
+---
+import Section from '../ui/Section.astro';
+import Button from '../ui/Button.astro';
+import { research } from '../../data/research';
+import { formatDate } from '../../lib/format';
+---
+<Section id="research" eyebrow="Research" title="Notes & explorations">
+  <ul class="divide-y divide-border border-y border-border">
+    {research.map((note) => (
+      <li class="grid gap-xs py-md md:grid-cols-[10rem_1fr]">
+        <time datetime={note.date} class="font-mono text-small text-muted">{formatDate(note.date)}</time>
+        <div>
+          <h3 class="font-display text-body font-semibold">{note.title}</h3>
+          <p class="mt-xs text-small text-muted">{note.summary}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+  <div class="mt-lg">
+    <Button href="/research" variant="secondary">All research</Button>
+  </div>
+</Section>

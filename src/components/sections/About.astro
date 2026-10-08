@@ -1,0 +1,9 @@
+---
+import Section from '../ui/Section.astro';
+import { profile } from '../../data/profile';
+---
+<Section id="about" eyebrow="About" title="Who I am">
+  <div class="flex max-w-2xl flex-col gap-sm text-muted">
+    {profile.bio.map((paragraph) => <p>{paragraph}</p>)}
+  </div>
+</Section>

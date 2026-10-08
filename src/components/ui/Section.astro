@@ -1,20 +1,27 @@
 ---
 import Container from './Container.astro';
 
-interface SectionProps {
-    id?: string;
-    eyebrow?: string;
-    title?: string;
-    class?: string;
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  class?: string;
 }
-const { id, eyebrow, title, class: className = '' } = Astro.props as SectionProps;
+const { id, eyebrow, title, class: className = '' } = Astro.props;
+const titleId = id && title ? `${id}-title` : undefined;
 ---
-<section id={id} class:list={['py-(--section-y)', className]}>
+<section
+  id={id}
+  aria-labelledby={titleId}
+  class:list={['scroll-mt-16 py-[var(--section-y)]', className]}
+>
   <Container>
     {(eyebrow || title) && (
       <header class="mb-lg">
-        {eyebrow && <p class="mb-xs font-mono text-small text-accent uppercase tracking-widest">{eyebrow}</p>}
-        {title && <h2 class="font-display text-heading">{title}</h2>}
+        {eyebrow && (
+          <p class="mb-xs font-mono text-small uppercase tracking-widest text-accent">{eyebrow}</p>
+        )}
+        {title && <h2 id={titleId} class="font-display text-heading">{title}</h2>}
       </header>
     )}
     <slot />

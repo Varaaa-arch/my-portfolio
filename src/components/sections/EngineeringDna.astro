@@ -1,0 +1,15 @@
+---
+import Section from '../ui/Section.astro';
+import { profile } from '../../data/profile';
+---
+<Section id="dna" eyebrow="Engineering DNA" title="How I build">
+  <ul class="grid grid-cols-1 gap-md sm:grid-cols-2 lg:grid-cols-4">
+    {profile.dna.map((item, i) => (
+      <li class="rounded-lg border border-border bg-surface p-md">
+        <span class="font-mono text-small text-accent">{String(i + 1).padStart(2, '0')}</span>
+        <h3 class="mt-xs font-display text-body font-semibold">{item.title}</h3>
+        <p class="mt-xs text-small text-muted">{item.description}</p>
+      </li>
+    ))}
+  </ul>
+</Section>

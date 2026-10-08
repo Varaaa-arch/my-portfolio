@@ -1,0 +1,16 @@
+---
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import { profile } from '../../data/profile';
+---
+<section aria-labelledby="hero-title" class="py-[var(--section-y)]">
+  <Container>
+    <p class="mb-sm font-mono text-small uppercase tracking-widest text-accent">{profile.role}</p>
+    <h1 id="hero-title" class="max-w-4xl font-display text-display">{profile.name}</h1>
+    <p class="mt-md max-w-2xl text-body text-muted">{profile.tagline}</p>
+    <div class="mt-lg flex flex-wrap gap-sm">
+      <Button href="#projects" size="lg">View projects</Button>
+      <Button href="#contact" variant="secondary" size="lg">Get in touch</Button>
+    </div>
+  </Container>
+</section>

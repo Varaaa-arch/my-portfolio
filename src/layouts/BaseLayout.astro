@@ -4,30 +4,88 @@ import '@fontsource-variable/space-grotesk';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/globals.css';
 import Container from '../components/ui/Container.astro';
+import { profile } from '../data/profile';
 
 interface Props {
   title: string;
+  description?: string;
+  image?: string;
 }
-const { title } = Astro.props;
+
+const { title, description = profile.tagline, image = '/og.png' } = Astro.props;
+
+const base = Astro.site ?? Astro.url;
+const canonical = new URL(Astro.url.pathname, base);
+const ogImage = new URL(image, base);
+const isHome = Astro.url.pathname === '/';
+const fullTitle = isHome ? `${profile.name} · ${profile.role}` : `${title} · ${profile.name}`;
+
+const nav = [
+  { href: '/projects', label: 'Projects' },
+  { href: '/lab', label: 'Lab' },
+  { href: '/research', label: 'Research' },
+  { href: '/#contact', label: 'Contact' },
+];
+const isActive = (href: string) => !href.includes('#') && Astro.url.pathname.startsWith(href);
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+    <meta name="theme-color" content="#0a0a0b" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <slot name="head" />
   </head>
   <body class="min-h-screen bg-background text-text">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-sm focus:top-sm focus:z-50 focus:rounded-md focus:bg-accent focus:px-sm focus:py-xs focus:text-white"
+    >
+      Skip to content
+    </a>
+
     <header class="border-b border-border">
-      <Container class="flex h-16 items-center justify-between">
-        <a href="/" class="font-display text-body font-semibold">Portfolio</a>
-        <nav class="flex gap-md text-small text-muted">
-          <a href="/projects" class="link hover:text-text">Projects</a>
-          <a href="/lab" class="link hover:text-text">Lab</a>
-          <a href="/research" class="link hover:text-text">Research</a>
+      <Container class="flex min-h-16 flex-wrap items-center justify-between gap-x-md gap-y-xs py-xs">
+        <a href="/" class="font-display font-semibold">{profile.name}</a>
+        <nav aria-label="Primary">
+          <ul class="flex gap-sm text-small text-muted sm:gap-md">
+            {nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="link hover:text-text"
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </nav>
       </Container>
     </header>
-    <slot />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="border-t border-border py-lg">
+      <Container class="flex flex-wrap items-center justify-between gap-sm text-small text-muted">
+        <p>© {new Date().getFullYear()} {profile.name}</p>
+        <p>Built with Astro</p>
+      </Container>
+    </footer>
   </body>
 </html>
