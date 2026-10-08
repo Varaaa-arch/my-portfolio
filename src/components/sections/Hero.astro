@@ -1,16 +1,68 @@
 ---
-import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import { profile } from '../../data/profile';
+
+const letters = [...profile.brand];
 ---
-<section aria-labelledby="hero-title" class="py-[var(--section-y)]">
-  <Container>
-    <p class="mb-sm font-mono text-small uppercase tracking-widest text-accent">{profile.role}</p>
-    <h1 id="hero-title" class="max-w-4xl font-display text-display">{profile.name}</h1>
-    <p class="mt-md max-w-2xl text-body text-muted">{profile.tagline}</p>
-    <div class="mt-lg flex flex-wrap gap-sm">
-      <Button href="#projects" size="lg">View projects</Button>
-      <Button href="#contact" variant="secondary" size="lg">Get in touch</Button>
+<section
+  id="hero"
+  data-hero
+  aria-labelledby="hero-title"
+  class="relative isolate flex min-h-svh items-center justify-center overflow-hidden bg-background px-[var(--container-pad)] py-xl text-center"
+>
+  <canvas data-hero-canvas aria-hidden="true" class="absolute inset-0 -z-10 h-full w-full"></canvas>
+
+  <div class="flex flex-col items-center">
+    <!-- Logo placeholder (huruf B). Ganti dengan logo lu, tapi pertahankan pathLength="1" -->
+    <svg
+      data-anim
+      data-logo
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="mb-md size-16 text-accent"
+    >
+      <circle cx="32" cy="32" r="28" pathLength="1"></circle>
+      <path d="M22 46V18h12a7 7 0 0 1 0 14H22h14a7 7 0 0 1 0 14H22" pathLength="1"></path>
+    </svg>
+
+    <h1 id="hero-title" class="font-display text-display uppercase tracking-[0.04em]">
+      <span class="sr-only">{profile.brand}</span>
+      <span aria-hidden="true">
+        {letters.map((ch) => <span data-anim data-letter class="inline-block">{ch}</span>)}
+      </span>
+    </h1>
+
+    <p class="mt-md flex flex-wrap items-center justify-center gap-x-sm font-mono text-small uppercase tracking-[0.3em] text-muted">
+      {profile.pillars.map((word, i) => (
+        <>
+          {i > 0 && <span data-anim data-pillar aria-hidden="true" class="text-accent">/</span>}
+          <span data-anim data-pillar>{word}</span>
+        </>
+      ))}
+    </p>
+
+    <p data-anim data-reveal class="mt-lg max-w-xl text-body text-muted">{profile.tagline}</p>
+    <div data-anim data-reveal class="mt-md">
+      <Button href="#about" size="lg">Enter experience</Button>
     </div>
-  </Container>
+  </div>
+
+  <button
+    type="button"
+    data-hero-skip
+    hidden
+    class="absolute bottom-md right-md font-mono text-small uppercase tracking-widest text-muted hover:text-text"
+  >
+    Skip intro <span aria-hidden="true">→</span>
+  </button>
 </section>
+
+<script>
+  import { initHeroIntro } from '../animation/heroIntro';
+  initHeroIntro();
+</script>

@@ -46,6 +46,21 @@ const isActive = (href: string) => !href.includes('#') && Astro.url.pathname.sta
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <script is:inline define:vars={{ skipRepeat: import.meta.env.PROD }}>
+      (function () {
+        try {
+          const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const seen = skipRepeat && sessionStorage.getItem('intro-played') === '1';
+          const root = document.documentElement;
+          if (!reduce && !seen) {
+            root.setAttribute('data-intro', 'pending');
+            // failsafe: kalau JS intro gagal, jangan sampai konten ke-hide selamanya
+            setTimeout(function () { root.removeAttribute('data-intro'); }, 15000);
+          }
+        } catch { /* storage atau matchMedia diblokir, abaikan */ }
+      })();
+    </script>
+
     <slot name="head" />
   </head>
   <body class="min-h-screen bg-background text-text">

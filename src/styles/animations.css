@@ -1,1 +1,10 @@
-:root {}
+/* Hero intro = progressive enhancement.
+   Elemen cuma disembunyikan saat intro 'pending'.
+   Tanpa JS / reduced motion / repeat visit -> semua langsung kelihatan. */
+html[data-intro='pending'] {
+  overflow: hidden; /* scroll lock selama intro */
+}
+html[data-intro='pending'] [data-hero] [data-anim] {
+  opacity: 0;
+  visibility: hidden;
+}

@@ -2,6 +2,8 @@ export const profile = {
   name: 'Your Name',
   role: 'Software Engineer',
   tagline: 'I build fast, accessible, and thoughtful things for the web.',
+  brand: 'BIZAR',
+  pillars: ['AI', 'Systems', 'Engineering'],
   location: 'Your City',
   email: 'hello@example.com',
   bio: [
