@@ -15,6 +15,7 @@ interface ScrollProgressOptions {
   end?: string;
   pin?: boolean;
   pinSpacing?: boolean;
+  map?: (progress: number) => number;
 }
 
 export function useScrollProgress<T extends HTMLElement = HTMLDivElement>({
@@ -23,6 +24,7 @@ export function useScrollProgress<T extends HTMLElement = HTMLDivElement>({
   end = "bottom top",
   pin = false,
   pinSpacing = true,
+  map,
 }: ScrollProgressOptions = {}) {
   const ref = useRef<T>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -35,7 +37,8 @@ export function useScrollProgress<T extends HTMLElement = HTMLDivElement>({
     }
 
     const setProgress = (value: number) => {
-      const progress = Math.min(1, Math.max(0, value));
+      const mapped = map ? map(value) : value;
+      const progress = Math.min(1, Math.max(0, mapped));
       element.style.setProperty("--scroll-progress", progress.toFixed(4));
 
       if (varName !== "--scroll-progress") {
@@ -63,7 +66,7 @@ export function useScrollProgress<T extends HTMLElement = HTMLDivElement>({
     return () => {
       trigger.kill(true);
     };
-  }, [end, pin, pinSpacing, prefersReducedMotion, start, varName]);
+  }, [end, map, pin, pinSpacing, prefersReducedMotion, start, varName]);
 
   return ref;
 }

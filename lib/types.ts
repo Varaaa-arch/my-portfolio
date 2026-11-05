@@ -24,6 +24,7 @@ export interface SiteConfig {
   shortName: string;
   role: string;
   tagline: string;
+  howIWork: string;
   about: string[];
   email: string;
   linkedin: string;

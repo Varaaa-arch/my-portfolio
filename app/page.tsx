@@ -1,25 +1,23 @@
-import { site } from "@/lib/data/site";
-import RevealText from "@/components/motion/RevealText";
+import Hero from "@/components/sections/Hero";
+import Statement from "@/components/sections/Statement";
+import Location from "@/components/sections/Location";
+import HowIWork from "@/components/sections/HowIWork";
+import Works from "@/components/sections/Works";
+import Contacts from "@/components/sections/Contacts";
+import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center gap-4">
-      <RevealText
-        as="h1"
-        className="t-30 text-foreground"
-        trigger="immediate"
-        delay={0.2}
-      >
-        {site.name}
-      </RevealText>
-      <RevealText
-        as="p"
-        className="t-20 text-muted"
-        trigger="immediate"
-        delay={0.5}
-      >
-        {site.role}
-      </RevealText>
+    <main className="relative z-[1]">
+      <Hero />
+      <Statement />
+      <Location />
+      <HowIWork />
+      <Works />
+      <div className="relative">
+        <Contacts />
+        <Footer />
+      </div>
     </main>
   );
 }

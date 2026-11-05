@@ -184,6 +184,44 @@ h1 {
   }
 }
 
+.t-email {
+  font-size: 4.42708vw;
+  line-height: 1.1;
+}
+
+@media (orientation: portrait) {
+  .t-email {
+    font-size: 6.5vw;
+    line-height: 1.15;
+  }
+}
+
+@keyframes ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ring-spin {
+  animation: ring-spin 36s linear infinite;
+}
+
+.ring-spin-reverse {
+  animation: ring-spin 64s linear infinite reverse;
+}
+
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring-spin,
+  .ring-spin-reverse {
+    animation: none;
+  }
+}
+
 .t-16 {
   font-size: 0.833333vw;
   line-height: 1.14583vw;
