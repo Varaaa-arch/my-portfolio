@@ -44,6 +44,48 @@ body {
   color: var(--background);
 }
 
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.reveal-word {
+  display: inline-block;
+  will-change: opacity, filter, transform;
+}
+
+.reveal-text:not(.reveal-ready) .reveal-word {
+  opacity: 0;
+}
+
+.scroll-fade {
+  opacity: var(--scroll-progress, 0);
+  filter: blur(calc((1 - var(--scroll-progress, 0)) * 10px))
+    brightness(var(--scroll-progress, 0));
+}
+
+@media (scripting: none) {
+  .reveal-text:not(.reveal-ready) .reveal-word {
+    opacity: 1;
+  }
+}
+
 h1 {
   font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-weight: 500;
