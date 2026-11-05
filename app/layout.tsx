@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter_Tight } from "next/font/google";
 import GrainOverlay from "@/components/ui/GrainOverlay";
+import CustomCursor from "@/components/ui/CustomCursor";
 import SmoothScrollProvider from "@/components/motion/SmoothScrollProvider";
 import "./globals.css";
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SmoothScrollProvider>
           <GrainOverlay />
           {children}
+          <CustomCursor />
         </SmoothScrollProvider>
       </body>
     </html>
