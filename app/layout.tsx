@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter_Tight } from "next/font/google";
+import GrainOverlay from "@/components/ui/GrainOverlay";
 import "./globals.css";
 
 const interTight = Inter_Tight({
@@ -17,7 +18,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="id" className={`${interTight.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <GrainOverlay />
+        {children}
+      </body>
     </html>
   );
 }
