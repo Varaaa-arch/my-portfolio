@@ -16,4 +16,6 @@ export const site: SiteConfig = {
   linkedin: "https://www.linkedin.com/in/bizar-octo-givardi-2557aa315/",
   github: "https://github.com/Varaaa-arch",
   location: "Berbasis di Indonesia",
+  instagram: "https://www.instagram.com/zarrrgvrd/",
+  twitter: "https://x.com/",
 };

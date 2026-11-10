@@ -1,37 +1,161 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# zarrgvrd · Portfolio
+
+Personal portfolio built with Next.js 16, Three.js, GSAP, and Lenis.
+
+---
+
+## Stack
+
+| Layer | Library / Tool |
+|---|---|
+| Framework | Next.js 16.4 (App Router) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS v4 |
+| 3D / Particles | Three.js 0.187 |
+| Animation | GSAP 3.15, Lenis 1.3 |
+| Image processing | Sharp 0.35 |
+| Package manager | pnpm 10 |
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js >= 20
+- pnpm >= 10
+
+### Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.example` ke `.env.local` lalu isi nilainya:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+| Variable | Keterangan |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | URL produksi tanpa trailing slash, contoh: `https://zarrgvrd.vercel.app` |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Content value dari meta tag Google Search Console (opsional) |
+| `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Content value dari meta tag Bing Webmaster Tools (opsional) |
 
-To learn more about Next.js, take a look at the following resources:
+### Build particle assets
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Particle scene membutuhkan binary asset yang di-generate dari `assets/portrait-source.png` dan `assets/indonesia.geojson`. Jalankan sekali sebelum dev/build pertama kali, atau setiap kali source asset berubah:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm assets
+```
 
-## Deploy on Vercel
+Output akan ditulis ke `public/particles/`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Run development server
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# my-portfolio
+```bash
+pnpm dev
+```
+
+Buka [http://localhost:3000](http://localhost:3000).
+
+### Build production
+
+```bash
+pnpm build
+pnpm start
+```
+
+---
+
+## Project Structure
+
+```
+app/                   # Routes (Next.js App Router)
+  layout.tsx           # Root layout, metadata, fonts
+  page.tsx             # Homepage
+  about/               # /about
+  projects/            # /projects
+    [slug]/            # /projects/:slug
+components/
+  layout/              # PageShell
+  motion/              # RevealText, SmoothScrollProvider
+  particles/           # Three.js particle scene
+  sections/            # Hero, Works, Footer, dll
+  ui/                  # CustomCursor, ParticleLink, GrainOverlay
+lib/
+  data/
+    site.ts            # Konfigurasi situs (nama, link sosial, dll)
+    projects.ts        # Daftar project portfolio
+    experience.ts      # Data pengalaman kerja
+  particles/           # Shader, formations, parser binary
+  seo.ts               # Helpers metadata & structured data
+  types.ts             # TypeScript interfaces
+assets/
+  portrait-source.png  # Source gambar untuk particle portrait
+  indonesia.geojson    # Source peta untuk particle globe
+public/
+  particles/           # Binary particle assets (generated)
+  icons/               # PWA icons
+scripts/
+  build-particle-assets.mjs  # Script generate particle binary
+```
+
+---
+
+## Adding a Project
+
+Edit `lib/data/projects.ts`, tambah entry baru ke array `projects`:
+
+```ts
+{
+  slug: "nama-project",        // dipakai sebagai URL /projects/nama-project
+  title: "Nama Project",
+  tagline: "Deskripsi singkat",
+  description: ["Paragraf deskripsi lengkap."],
+  stack: ["Next.js", "PostgreSQL"],
+  year: "2026",                // opsional
+  href: "https://...",         // opsional, link live
+  repo: "https://github.com/...", // opsional, link repo
+}
+```
+
+---
+
+## Deploy
+
+### Vercel (recommended)
+
+1. Push repo ke GitHub
+2. Import di [vercel.com/new](https://vercel.com/new)
+3. Set environment variables di dashboard Vercel (sama seperti `.env.local`)
+4. Deploy. Vercel akan otomatis deteksi Next.js
+
+> `pnpm assets` perlu dijalankan sebagai bagian dari build. Tambahkan ke build command di Vercel jika belum:
+> ```
+> pnpm assets && pnpm build
+> ```
+
+### Self-hosted
+
+```bash
+pnpm assets
+pnpm build
+pnpm start        # default port 3000
+```
+
+Atau pakai PM2:
+
+```bash
+pm2 start "pnpm start" --name portfolio
+```
+
+---
+
+## License
+
+MIT

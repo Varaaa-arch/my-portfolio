@@ -3,16 +3,16 @@ import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import { projects } from "@/lib/data/projects";
 import { site } from "@/lib/data/site";
-import { createAboutStructuredData, siteDescription } from "@/lib/seo";
+import { createAboutStructuredData, aboutDescription } from "@/lib/seo";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "About",
-  description: siteDescription,
+  description: aboutDescription,
   alternates: { canonical: "/about" },
   openGraph: {
     title: `About · ${site.name}`,
-    description: siteDescription,
+    description: aboutDescription,
     url: "/about",
     images: [
       {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `About · ${site.name}`,
-    description: siteDescription,
+    description: aboutDescription,
     images: ["/twitter-image"],
   },
 };

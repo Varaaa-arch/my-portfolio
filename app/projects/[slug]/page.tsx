@@ -12,7 +12,7 @@ type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export const ensureStatic = "navigation";
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -54,7 +54,12 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${project.title} · ${site.name}`,
       description,
-      images: ["/twitter-image"],
+      images: [
+        {
+          url: "/twitter-image",
+          alt: `${project.title} · ${site.name}`,
+        },
+      ],
     },
   };
 }

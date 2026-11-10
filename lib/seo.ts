@@ -22,6 +22,9 @@ export function getProjectDescription(project: Project) {
   ).join(" ");
 }
 
+export const aboutDescription =
+  `Kenali lebih jauh ${site.name}, backend engineer dan full-stack developer berbasis di Indonesia. Fokus pada sistem produksi, arsitektur API, dan infrastruktur yang andal.`;
+
 export const siteKeywords = [
   "Bizar Octo Givardi",
   "backend engineer Indonesia",
@@ -138,6 +141,18 @@ export function createStructuredData(siteUrl: string) {
           };
         }),
       },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${siteUrl}/#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteUrl}/`,
+          },
+        ],
+      },
     ],
   };
 }
@@ -145,23 +160,45 @@ export function createStructuredData(siteUrl: string) {
 export function createProjectsStructuredData(siteUrl: string) {
   return {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "@id": `${siteUrl}/projects/#collectionpage`,
-    url: `${siteUrl}/projects`,
-    name: `Projects ${site.name}`,
-    description: projectsDescription,
-    inLanguage: "id-ID",
-    isPartOf: { "@id": `${siteUrl}/#website` },
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: projects.length,
-      itemListElement: projects.map((project, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: project.title,
-        url: `${siteUrl}/projects/${project.slug}`,
-      })),
-    },
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${siteUrl}/projects/#collectionpage`,
+        url: `${siteUrl}/projects`,
+        name: `Projects ${site.name}`,
+        description: projectsDescription,
+        inLanguage: "id-ID",
+        isPartOf: { "@id": `${siteUrl}/#website` },
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: projects.length,
+          itemListElement: projects.map((project, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: project.title,
+            url: `${siteUrl}/projects/${project.slug}`,
+          })),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${siteUrl}/projects/#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${siteUrl}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Projects",
+            item: `${siteUrl}/projects`,
+          },
+        ],
+      },
+    ],
   };
 }
 
