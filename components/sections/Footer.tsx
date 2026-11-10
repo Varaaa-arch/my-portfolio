@@ -4,9 +4,9 @@ import { site } from "@/lib/data/site";
 export default function Footer() {
   return (
     <footer className="absolute inset-x-0 bottom-0 z-[1]">
-      <div className="t-16 relative mx-auto flex w-[90vw] items-center justify-between gap-x-[1.5rem] gap-y-[0.75rem] py-[2.22222svh] uppercase tracking-[0.08em] text-muted">
+      <div className="t-16 relative mx-auto flex w-[90vw] flex-wrap items-center justify-between gap-x-[1.5rem] gap-y-[0.75rem] py-[2.22222svh] uppercase tracking-[0.08em] text-muted">
         <div className="flex items-center gap-[0.8vw]">
-          <span className="flex h-[2vw] w-[2vw] shrink-0 items-center justify-center rounded-full border border-white/25 text-[0.7rem] leading-none text-foreground portrait:h-7 portrait:w-7">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/25 text-[0.7rem] leading-none text-foreground sm:h-[2vw] sm:w-[2vw]">
             B
           </span>
           <span>{site.name} · © 2026</span>
@@ -14,7 +14,7 @@ export default function Footer() {
 
         <nav
           aria-label="Navigasi footer"
-          className="absolute left-1/2 -translate-x-1/2 flex items-center gap-x-[1.2rem]"
+          className="flex items-center gap-x-[1.2rem] sm:absolute sm:left-1/2 sm:-translate-x-1/2"
         >
           <Link
             href="/projects"
