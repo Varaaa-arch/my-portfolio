@@ -94,6 +94,19 @@ html.has-custom-cursor * {
   opacity: 0;
 }
 
+.reveal-text.reveal-start-visible:not(.reveal-ready) .reveal-word {
+  opacity: 1;
+  filter: blur(10px);
+  translate: 0 30%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-text.reveal-start-visible:not(.reveal-ready) .reveal-word {
+    filter: none;
+    translate: none;
+  }
+}
+
 .scroll-fade {
   opacity: var(--scroll-progress, 0);
   filter: blur(calc((1 - var(--scroll-progress, 0)) * 10px))
@@ -103,20 +116,24 @@ html.has-custom-cursor * {
 @media (scripting: none) {
   .reveal-text:not(.reveal-ready) .reveal-word {
     opacity: 1;
+    filter: none;
+    translate: none;
   }
 }
 
-h1 {
-  font-family: var(--font-inter-tight), system-ui, sans-serif;
-  font-weight: 500;
-  font-size: 3.125vw;
-  line-height: 3.38542vw;
-}
-
-@media (orientation: portrait) {
+@layer base {
   h1 {
-    font-size: 6.11111vh;
-    line-height: 6.62037vh;
+    font-family: var(--font-inter-tight), system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 3.125vw;
+    line-height: 3.38542vw;
+  }
+
+  @media (orientation: portrait) {
+    h1 {
+      font-size: 6.11111vh;
+      line-height: 6.62037vh;
+    }
   }
 }
 

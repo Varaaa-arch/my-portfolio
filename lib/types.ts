@@ -8,6 +8,7 @@ export interface Project {
   year?: string;
   href?: string;
   repo?: string;
+  image?: string;
   video?: string;
 }
 
@@ -28,5 +29,6 @@ export interface SiteConfig {
   about: string[];
   email: string;
   linkedin: string;
+  github: string;
   location: string;
 }

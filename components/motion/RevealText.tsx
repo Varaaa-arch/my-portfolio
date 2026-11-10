@@ -25,6 +25,7 @@ interface RevealTextProps {
   duration?: number;
   trigger?: "scroll" | "immediate";
   start?: string;
+  startVisible?: boolean;
 }
 
 export default function RevealText({
@@ -36,6 +37,7 @@ export default function RevealText({
   duration = 0.9,
   trigger = "scroll",
   start = "top 85%",
+  startVisible = false,
 }: RevealTextProps) {
   const ref = useRef<HTMLElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -60,7 +62,11 @@ export default function RevealText({
     const context = gsap.context(() => {
       gsap.fromTo(
         words,
-        { opacity: 0, filter: "blur(10px)", yPercent: 30 },
+        {
+          opacity: startVisible ? 1 : 0,
+          filter: "blur(10px)",
+          yPercent: 30,
+        },
         {
           opacity: 1,
           filter: "blur(0px)",
@@ -79,7 +85,15 @@ export default function RevealText({
     }, element);
 
     return () => context.revert();
-  }, [delay, duration, prefersReducedMotion, stagger, start, trigger]);
+  }, [
+    delay,
+    duration,
+    prefersReducedMotion,
+    stagger,
+    start,
+    startVisible,
+    trigger,
+  ]);
 
   const setRef = (node: HTMLElement | null) => {
     ref.current = node;
@@ -97,7 +111,13 @@ export default function RevealText({
     )
   );
 
-  const classNameValue = className ? `reveal-text ${className}` : "reveal-text";
+  const classNameValue = [
+    "reveal-text",
+    startVisible ? "reveal-start-visible" : null,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   switch (as) {
     case "h1":

@@ -5,6 +5,7 @@ import ParticleLink from "@/components/ui/ParticleLink";
 export default function Contacts() {
   return (
     <section className="relative z-[1] mx-auto flex h-svh w-[90vw] flex-col items-center justify-center text-center">
+      <h2 className="sr-only">Kontak</h2>
       <RevealText
         as="p"
         className="t-16 uppercase tracking-[0.08em] text-muted"

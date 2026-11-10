@@ -8,13 +8,13 @@ import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <main className="relative z-[1]">
+    <main id="main" className="relative z-[1]">
       <Hero />
       <Statement />
       <Location />
       <HowIWork />
       <Works />
-      <div className="relative">
+      <div className="relative" data-scene="contacts">
         <Contacts />
         <Footer />
       </div>

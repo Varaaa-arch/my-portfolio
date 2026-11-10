@@ -5,7 +5,7 @@ export const site: SiteConfig = {
   shortName: "Bizar",
   role: "Backend Engineer / Full-Stack Developer",
   tagline:
-    "Saya membangun backend yang andal dan produk full-stack yang siap produksi — dari database, API, hingga infrastruktur.",
+    "Saya membangun backend yang andal dan produk full-stack yang siap produksi, dari database, API, hingga infrastruktur.",
   howIWork:
     "Saya lebih suka terlibat dari masalah sampai solusi: merancang skema data, membangun API yang stabil, dan memastikan sistemnya bisa dijalankan serta dipantau di produksi.",
   about: [
@@ -14,5 +14,6 @@ export const site: SiteConfig = {
   ],
   email: "bizar.givardi18@gmail.com",
   linkedin: "https://www.linkedin.com/in/bizar-octo-givardi-2557aa315/",
+  github: "https://github.com/Varaaa-arch",
   location: "Berbasis di Indonesia",
 };

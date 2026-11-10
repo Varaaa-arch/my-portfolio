@@ -7,6 +7,7 @@ export const projects: Project[] = [
     tagline: "Aplikasi pemesanan tiket pesawat",
     description: ["Aplikasi pemesanan tiket pesawat."],
     stack: ["Laravel", "Go", "PostgreSQL", "Docker"],
+    repo: "https://github.com/Varaaa-arch/jelajahin",
   },
   {
     slug: "kasa-pos",
@@ -16,6 +17,7 @@ export const projects: Project[] = [
       "Sistem POS lokal yang menghubungkan checkout web, transaksi atomik di database, dan cetak struk thermal via Print Agent.",
     ],
     stack: ["Go", "Next.js", "PostgreSQL", "ESC/POS"],
+    repo: "https://github.com/Varaaa-arch/kasa-pos",
   },
   {
     slug: "infraforge",
@@ -36,6 +38,7 @@ export const projects: Project[] = [
       "Loki",
       "MinIO",
     ],
+    repo: "https://github.com/Varaaa-arch/InfraForge",
   },
   {
     slug: "baut-store",
@@ -45,5 +48,16 @@ export const projects: Project[] = [
       "E-commerce untuk produk baut, mur, dan aksesoris konstruksi.",
     ],
     stack: ["Next.js 16", "Prisma", "MySQL"],
+  },
+  {
+    slug: "3d-flower",
+    title: "Untukmu",
+    tagline: "Website interaktif yang menampilkan buket bunga tiga dimensi",
+    description: [
+      "Pengalaman web interaktif yang menampilkan buket bunga tiga dimensi.",
+    ],
+    stack: ["Next.js 16.4", "Three JS", "TypeScript", "Tailwind V4"],
+    href: "https://3d-flower.vercel.app",
+    repo: "https://github.com/Varaaa-arch/3d-flower",
   },
 ];

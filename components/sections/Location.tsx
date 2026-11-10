@@ -13,8 +13,10 @@ export default function Location() {
   return (
     <section
       ref={ref}
+      data-scene="location"
       className="relative z-[1] flex h-svh items-center justify-center overflow-hidden"
     >
+      <h2 className="sr-only">Lokasi</h2>
       <div className="scroll-fade pointer-events-none absolute inset-0 flex items-center justify-center text-foreground/25">
         <svg
           viewBox="0 0 400 400"
@@ -74,11 +76,17 @@ export default function Location() {
           />
         </svg>
       </div>
-      <p className="t-30 relative z-[1] text-center">
-        <RevealText as="span" start="top 80%">
-          {site.location}
-        </RevealText>
-      </p>
+      <div className="relative z-[1]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-x-[16vw] -inset-y-[10vh] bg-[radial-gradient(50%_50%_at_50%_50%,rgba(34,33,36,0.92)_0%,rgba(34,33,36,0.45)_55%,rgba(34,33,36,0)_80%)]"
+        />
+        <p className="t-30 relative text-center [text-shadow:0_1px_22px_rgba(34,33,36,0.95)]">
+          <RevealText as="span" start="top 80%">
+            {site.location}
+          </RevealText>
+        </p>
+      </div>
     </section>
   );
 }
