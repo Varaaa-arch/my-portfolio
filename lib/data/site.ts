@@ -9,7 +9,7 @@ export const site: SiteConfig = {
   howIWork:
     "Saya lebih suka terlibat dari masalah sampai solusi: merancang skema data, membangun API yang stabil, dan memastikan sistemnya bisa dijalankan serta dipantau di produksi.",
   about: [
-    "Saya Bizar, backend engineer dan full-stack developer. Saya fokus pada sistem yang rapi dan siap produksi: desain database, API yang stabil, hingga infrastruktur yang bisa diandalkan.",
+    "Saya Bizar Octo Givardi, backend engineer dan full-stack developer. Saya fokus pada sistem yang rapi dan siap produksi: desain database, API yang stabil, hingga infrastruktur yang bisa diandalkan.",
     "Proyek yang saya kerjakan mencakup pemesanan tiket pesawat, sistem POS dengan cetak struk thermal, platform DevOps, dan e-commerce.",
   ],
   email: "bizar.givardi18@gmail.com",
@@ -17,5 +17,5 @@ export const site: SiteConfig = {
   github: "https://github.com/Varaaa-arch",
   location: "Berbasis di Indonesia",
   instagram: "https://www.instagram.com/zarrrgvrd/",
-  twitter: "https://x.com/",
+  twitter: "https://x.com/Ninuninu38",
 };

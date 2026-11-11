@@ -55,27 +55,30 @@ export default function RevealText({
 
     if (prefersReducedMotion) {
       gsap.set(words, { opacity: 1, filter: "none", yPercent: 0 });
-      element.classList.add("reveal-ready");
+      element.classList.add("reveal-ready", "reveal-done");
       return;
     }
+
+    const useBlur = window.matchMedia("(pointer: fine)").matches;
 
     const context = gsap.context(() => {
       gsap.fromTo(
         words,
         {
           opacity: startVisible ? 1 : 0,
-          filter: "blur(10px)",
+          filter: useBlur ? "blur(10px)" : "none",
           yPercent: 30,
         },
         {
           opacity: 1,
-          filter: "blur(0px)",
+          filter: useBlur ? "blur(0px)" : "none",
           yPercent: 0,
           duration,
           delay,
           stagger,
           ease: "refEase",
           onStart: () => element.classList.add("reveal-ready"),
+          onComplete: () => element.classList.add("reveal-done"),
           scrollTrigger:
             trigger === "scroll"
               ? { trigger: element, start, once: true }

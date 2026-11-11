@@ -33,5 +33,11 @@
   "engines": {
     "node": ">=20.9",
     "pnpm": ">=10"
-  }
+  },
+  "browserslist": [
+    "chrome >= 105",
+    "edge >= 105",
+    "firefox >= 104",
+    "safari >= 16"
+  ]
 }

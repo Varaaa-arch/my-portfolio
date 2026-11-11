@@ -68,8 +68,8 @@ html.lenis body {
 .custom-cursor {
   position: fixed;
   inset: 0;
+  display: none;
   z-index: 9999;
-  display: block;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -85,9 +85,17 @@ html.has-custom-cursor * {
   cursor: none !important;
 }
 
+html.has-custom-cursor .custom-cursor {
+  display: block;
+}
+
 .reveal-word {
   display: inline-block;
   will-change: opacity, filter, transform;
+}
+
+.reveal-text.reveal-done .reveal-word {
+  will-change: auto;
 }
 
 .reveal-text:not(.reveal-ready) .reveal-word {
@@ -98,6 +106,12 @@ html.has-custom-cursor * {
   opacity: 1;
   filter: blur(10px);
   translate: 0 30%;
+}
+
+@media (pointer: coarse) {
+  .reveal-text.reveal-start-visible:not(.reveal-ready) .reveal-word {
+    filter: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -139,17 +153,23 @@ html.has-custom-cursor * {
 
 .grain-overlay {
   position: fixed;
-  top: -110%;
-  left: -50%;
+  inset: 0;
   z-index: 10;
-  width: 300%;
-  height: 300%;
   opacity: 0.1;
   pointer-events: none;
   background-image: url("/noise.svg");
   background-repeat: repeat;
-  animation: grain 3s steps(5, end) infinite;
-  will-change: transform;
+}
+
+@media (pointer: fine) {
+  .grain-overlay {
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    animation: grain 3s steps(5, end) infinite;
+    will-change: transform;
+  }
 }
 
 @keyframes grain {
@@ -163,41 +183,35 @@ html.has-custom-cursor * {
   }
 
   20% {
-    transform: translate(-15%, 5%);
+    transform: translate(-10%, 4%);
   }
 
   30% {
-    transform: translate(7%, -25%);
+    transform: translate(5%, -18%);
   }
 
   40% {
-    transform: translate(-5%, 25%);
+    transform: translate(-4%, 18%);
   }
 
   50% {
-    transform: translate(-15%, 10%);
+    transform: translate(-10%, 8%);
   }
 
   60% {
-    transform: translate(15%, 0);
+    transform: translate(10%, 0);
   }
 
   70% {
-    transform: translate(0, 15%);
+    transform: translate(0, 10%);
   }
 
   80% {
-    transform: translate(3%, 35%);
+    transform: translate(2%, 24%);
   }
 
   90% {
-    transform: translate(-10%, 10%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .grain-overlay {
-    animation: none;
+    transform: translate(-8%, 8%);
   }
 }
 

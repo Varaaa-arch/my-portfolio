@@ -7,11 +7,11 @@ import { createAboutStructuredData, aboutDescription } from "@/lib/seo";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "Tentang",
   description: aboutDescription,
   alternates: { canonical: "/about" },
   openGraph: {
-    title: `About · ${site.name}`,
+    title: `Tentang · ${site.name}`,
     description: aboutDescription,
     url: "/about",
     images: [
@@ -19,13 +19,13 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: `About · ${site.name}`,
+        alt: `Tentang · ${site.name}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `About · ${site.name}`,
+    title: `Tentang · ${site.name}`,
     description: aboutDescription,
     images: ["/twitter-image"],
   },

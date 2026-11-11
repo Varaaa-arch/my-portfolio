@@ -23,6 +23,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   poweredByHeader: false,
   turbopack: {
+    resolveAlias: {
+      "../build/polyfills/polyfill-module": false,
+    },
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],

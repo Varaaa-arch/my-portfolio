@@ -83,6 +83,8 @@ export default function CustomCursor() {
         previousPointerX = pointerX;
         previousPointerY = pointerY;
       }
+
+      start();
     };
 
     const onPointerOver = (event: PointerEvent) => {
@@ -100,9 +102,19 @@ export default function CustomCursor() {
     };
 
     let frame = 0;
+    let running = false;
+
+    const start = () => {
+      if (running) {
+        return;
+      }
+
+      running = true;
+      frame = requestAnimationFrame(tick);
+    };
 
     const tick = () => {
-      frame = requestAnimationFrame(tick);
+      frame = 0;
 
       const dx = pointerX - previousPointerX;
       const dy = pointerY - previousPointerY;
@@ -139,6 +151,10 @@ export default function CustomCursor() {
       context.clearRect(0, 0, width, height);
 
       if (!visible || opacity < 0.01) {
+        running = false;
+        points.length = 0;
+        speed = 0;
+        trailFactor = 0;
         return;
       }
 
@@ -186,9 +202,9 @@ export default function CustomCursor() {
       context.beginPath();
       context.arc(headX, headY, 3.2 * hoverScale, 0, Math.PI * 2);
       context.fill();
-    };
 
-    frame = requestAnimationFrame(tick);
+      frame = requestAnimationFrame(tick);
+    };
 
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onPointerMove, { passive: true });

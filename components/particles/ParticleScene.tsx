@@ -1,7 +1,20 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import {
+  AdditiveBlending,
+  BufferAttribute,
+  BufferGeometry,
+  Color,
+  Group,
+  MathUtils,
+  PerspectiveCamera,
+  Points,
+  Scene,
+  ShaderMaterial,
+  Vector2,
+  WebGLRenderer,
+} from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
@@ -100,9 +113,9 @@ export default function ParticleScene({
     let timeoutHandle: number | null = null;
     let frame = 0;
     let resizeFrame = 0;
-    let renderer: THREE.WebGLRenderer | null = null;
-    let geometry: THREE.BufferGeometry | null = null;
-    let material: THREE.ShaderMaterial | null = null;
+    let renderer: WebGLRenderer | null = null;
+    let geometry: BufferGeometry | null = null;
+    let material: ShaderMaterial | null = null;
 
     const start = async () => {
       const coarse = window.matchMedia("(pointer: coarse)").matches;
@@ -129,7 +142,7 @@ export default function ParticleScene({
       }
 
       try {
-        renderer = new THREE.WebGLRenderer({
+        renderer = new WebGLRenderer({
           alpha: true,
           antialias: true,
           powerPreference: "high-performance",
@@ -147,9 +160,9 @@ export default function ParticleScene({
       const phases = createPhases(count, random);
       const indonesia = new Float32Array(portrait.positions);
 
-      const scene = new THREE.Scene();
-      const group = new THREE.Group();
-      const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 30);
+      const scene = new Scene();
+      const group = new Group();
+      const camera = new PerspectiveCamera(50, 1, 0.1, 30);
       const uniforms = {
         uTime: { value: 0 },
         uIntro: { value: prefersReducedMotion ? 1 : 0 },
@@ -162,58 +175,58 @@ export default function ParticleScene({
         uSize: { value: coarse ? 2.5 : 2.25 },
         uPixelRatio: { value: 1 },
         uPortraitFade: { value: 1 },
-        uPointer: { value: new THREE.Vector2(0, 0) },
-        uLight: { value: new THREE.Vector2(0, 0) },
+        uPointer: { value: new Vector2(0, 0) },
+        uLight: { value: new Vector2(0, 0) },
         uAspect: { value: 1 },
         uLightRadius: { value: LIGHT_RADIUS },
         uLightStrength: { value: 0 },
-        uColor: { value: new THREE.Color("#f0f2f0") },
+        uColor: { value: new Color("#f0f2f0") },
         uExposure: { value: 0.9 },
         uGlow: { value: 0.35 },
       };
 
-      geometry = new THREE.BufferGeometry();
+      geometry = new BufferGeometry();
       geometry.setAttribute(
         "position",
-        new THREE.BufferAttribute(portrait.positions, 3)
+        new BufferAttribute(portrait.positions, 3)
       );
       geometry.setAttribute(
         "aPortrait",
-        new THREE.BufferAttribute(portrait.positions, 3)
+        new BufferAttribute(portrait.positions, 3)
       );
-      geometry.setAttribute("aGlobe", new THREE.BufferAttribute(globe, 3));
-      const indonesiaAttribute = new THREE.BufferAttribute(indonesia, 3);
+      geometry.setAttribute("aGlobe", new BufferAttribute(globe, 3));
+      const indonesiaAttribute = new BufferAttribute(indonesia, 3);
       geometry.setAttribute("aIndonesia", indonesiaAttribute);
-      geometry.setAttribute("aWave", new THREE.BufferAttribute(wave, 3));
+      geometry.setAttribute("aWave", new BufferAttribute(wave, 3));
       geometry.setAttribute(
         "aScatter",
-        new THREE.BufferAttribute(scatter, 3)
+        new BufferAttribute(scatter, 3)
       );
-      geometry.setAttribute("aPhase", new THREE.BufferAttribute(phases, 1));
+      geometry.setAttribute("aPhase", new BufferAttribute(phases, 1));
       geometry.setAttribute(
         "aLuma",
-        new THREE.BufferAttribute(portrait.luma, 1)
+        new BufferAttribute(portrait.luma, 1)
       );
       geometry.setDrawRange(
         0,
         coarse ? Math.floor(count * MOBILE_RATIO) : count
       );
 
-      material = new THREE.ShaderMaterial({
+      material = new ShaderMaterial({
         vertexShader: particleVertexShader,
         fragmentShader: particleFragmentShader,
         uniforms,
         transparent: true,
         depthWrite: false,
         depthTest: false,
-        blending: THREE.AdditiveBlending,
+        blending: AdditiveBlending,
       });
 
-      const points = new THREE.Points(geometry, material);
+      const points = new Points(geometry, material);
       points.frustumCulled = false;
       points.position.y = NECK_PIVOT;
 
-      const tilt = new THREE.Group();
+      const tilt = new Group();
       tilt.position.y = -NECK_PIVOT;
       tilt.add(points);
       group.add(tilt);
@@ -251,7 +264,7 @@ export default function ParticleScene({
 
         const visibleHeight =
           2 *
-          Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) *
+          Math.tan(MathUtils.degToRad(camera.fov / 2)) *
           camera.position.z;
         const visibleWidth = visibleHeight * (width / height);
         const scale = (visibleHeight * (isPortrait ? 0.9 : 0.98)) / 2.05;
@@ -410,6 +423,38 @@ export default function ParticleScene({
         document.querySelectorAll<HTMLElement>("[data-scene]")
       );
 
+      const visibleSections = new Set<HTMLElement>();
+      let activeSection: HTMLElement | null = null;
+      let sectionObserver: IntersectionObserver | null = null;
+
+      if ("IntersectionObserver" in window) {
+        sectionObserver = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              const element = entry.target as HTMLElement;
+
+              if (entry.isIntersecting) {
+                visibleSections.add(element);
+              } else {
+                visibleSections.delete(element);
+              }
+            }
+
+            activeSection =
+              sectionElements.find((element) =>
+                visibleSections.has(element)
+              ) ?? null;
+          },
+          { rootMargin: "-50% 0px -50% 0px" }
+        );
+
+        for (const element of sectionElements) {
+          sectionObserver.observe(element);
+        }
+
+        cleanup.push(() => sectionObserver?.disconnect());
+      }
+
       let pointerX = 0;
       let pointerY = 0;
       let pointerTargetX = 0;
@@ -493,19 +538,9 @@ export default function ParticleScene({
           clamp(elapsed / INTRO_DURATION)
         );
 
-        const mid = window.innerHeight * 0.5;
-        let activeOpacity = 1;
-        let activeElement: HTMLElement | null = null;
-
-        for (const element of sectionElements) {
-          const rect = element.getBoundingClientRect();
-
-          if (rect.width > 0 && rect.top <= mid && rect.bottom >= mid) {
-            activeOpacity = SECTION_OPACITY[element.dataset.scene ?? ""] ?? 1;
-            activeElement = element;
-            break;
-          }
-        }
+        const activeOpacity = activeSection
+          ? SECTION_OPACITY[activeSection.dataset.scene ?? ""] ?? 1
+          : 1;
 
         target.opacity = activeOpacity;
 
@@ -515,13 +550,9 @@ export default function ParticleScene({
         target.turbulence = clamp(velocity / 2600);
 
         const worksProgress =
-          activeElement?.dataset.scene === "works"
-            ? Number(activeElement.dataset.workProgress ?? "0")
-            : Number(
-                worksElements
-                  .find((element) => element.getBoundingClientRect().width > 0)
-                  ?.dataset.workProgress ?? "0"
-              );
+          activeSection?.dataset.scene === "works"
+            ? Number(activeSection.dataset.workProgress ?? "0")
+            : Number(worksElements[0]?.dataset.workProgress ?? "0");
 
         target.slide = Number.isFinite(worksProgress)
           ? clamp(worksProgress)
